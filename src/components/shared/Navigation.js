@@ -21,10 +21,10 @@ const Navigation = () => {
             <LinkContainer to="/contact-us">
               <Nav.Link>Contact Us</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="sign-up">
+            <LinkContainer to="/user/sign-up">
               <Nav.Link>Sign-Up</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="log-in">
+            <LinkContainer to="/user/login">
               <Nav.Link>Log-In</Nav.Link>
             </LinkContainer>
           </Nav>
