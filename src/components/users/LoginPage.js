@@ -24,8 +24,10 @@ const LoginPage = ({ history }) => {
   const { error, loading, userInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
   useEffect(() => {
-    history.push("/users/dashboard");
-  }, userInfo);
+    if (userInfo) {
+      history.push("/users/dashboard");
+    }
+  }, [userInfo, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

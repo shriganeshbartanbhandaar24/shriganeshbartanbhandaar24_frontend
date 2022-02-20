@@ -9,6 +9,7 @@ const UserDashboardPage = ({ history }) => {
   useEffect(() => {
     if (!userInfo) {
       history.push("/users/login");
+      console.log("sHsiub");
     }
   }, [userInfo, history]);
 
