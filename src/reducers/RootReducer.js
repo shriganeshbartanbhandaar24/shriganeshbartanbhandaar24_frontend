@@ -4,7 +4,9 @@ import { userLoginReducers, userSignUpReducer } from "./userReducers";
 
 const initialState = {
   userLogin: {
-    userInfo: null,
+    userInfo: localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null,
   },
   userSignUp: {
     success: null,
