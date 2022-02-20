@@ -12,6 +12,7 @@ import GoogleLogin from "react-google-login";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { userLogin } from "../../action/userAction";
 import FormContainer from "../shared/FormContainer";
 import Loader from "../shared/Loader";
 import Message from "../shared/Message";
@@ -22,12 +23,9 @@ const LoginPage = ({ history }) => {
 
   const { error, loading, userInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
-
   useEffect(() => {
-    if (userInfo) {
-      history.push("/users/account");
-    }
-  }, [userInfo]);
+    history.push("/users/dashboard");
+  }, userInfo);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,6 +34,8 @@ const LoginPage = ({ history }) => {
       error = "Please fill the data";
       return;
     }
+
+    dispatch(userLogin(email, password));
   };
   const responseGoogle = async (response) => {
     const token = response.tokenId;
