@@ -2,6 +2,8 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
+  USER_LOG_OUT_FAIL,
+  USER_LOG_OUT_REQUEST,
   USER_SIGN_UP_FAIL,
   USER_SIGN_UP_REQUEST,
   USER_SIGN_UP_SUCCESS,
@@ -37,4 +39,17 @@ const userSignUpReducer = (state = {}, action) => {
   }
 };
 
-export { userLoginReducers, userSignUpReducer };
+const userLogOutReducer = (state = { success: null }, action) => {
+  switch (action.type) {
+    case USER_LOG_OUT_REQUEST:
+      return { loading: true };
+    case USER_LOGIN_SUCCESS:
+      return { loading: false, success: true, ...state };
+    case USER_LOG_OUT_FAIL:
+      return { loading: false, success: false, ...state };
+    default:
+      return state;
+  }
+};
+
+export { userLoginReducers, userSignUpReducer, userLogOutReducer };

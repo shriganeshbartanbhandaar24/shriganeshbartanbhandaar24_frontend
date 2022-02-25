@@ -1,6 +1,10 @@
 import { combineReducers } from "redux";
-import { userLogin, userSignUp } from "../action/userAction";
-import { userLoginReducers, userSignUpReducer } from "./userReducers";
+import { userLogin, userSignUp, userLogOut } from "../action/userAction";
+import {
+  userLoginReducers,
+  userSignUpReducer,
+  userLogOutReducer,
+} from "./userReducers";
 
 const initialState = {
   userLogin: {
@@ -11,10 +15,14 @@ const initialState = {
   userSignUp: {
     success: null,
   },
+  userLogOut: {
+    isLogOut: null,
+  },
 };
 const rootReducers = combineReducers({
   userLogin: userLoginReducers,
   userSignUp: userSignUpReducer,
+  userLogOut: userLogOutReducer,
 });
 
 export { initialState };
