@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 import {
   Button,
   Col,
@@ -7,41 +7,41 @@ import {
   FormGroup,
   FormLabel,
   Row,
-} from "react-bootstrap";
-import GoogleLogin from "react-google-login";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { userLogin } from "../../action/userAction";
-import FormContainer from "../shared/FormContainer";
-import Loader from "../shared/Loader";
-import Message from "../shared/Message";
+} from "react-bootstrap"
+import GoogleLogin from "react-google-login"
+import { useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
+import { userLogin } from "../../action/userAction"
+import FormContainer from "../shared/FormContainer"
+import Loader from "../shared/Loader"
+import Message from "../shared/Message"
 
 const LoginPage = ({ history }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
-  const { error, loading, userInfo } = useSelector((state) => state.userLogin);
-  const dispatch = useDispatch();
+  const { error, loading, userInfo } = useSelector((state) => state.userLogin)
+  const dispatch = useDispatch()
   useEffect(() => {
     if (userInfo) {
-      history.push("/users/dashboard");
+      history.push("/")
     }
-  }, [userInfo, history]);
+  }, [userInfo, history])
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!email && !password) {
-      error = "Please fill the data";
-      return;
+      error = "Please fill the data"
+      return
     }
 
-    dispatch(userLogin(email, password));
-  };
+    dispatch(userLogin(email, password))
+  }
   const responseGoogle = async (response) => {
-    const token = response.tokenId;
-  };
+    const token = response.tokenId
+  }
   return (
     <main className="mt-4">
       <h1 className="text-center">Log In</h1>
@@ -49,16 +49,16 @@ const LoginPage = ({ history }) => {
         {loading && <Loader />}
         {error && <Message />}
         <Form onSubmit={handleSubmit}>
-          <FormGroup className="mb-3">
-            <FormLabel>Email</FormLabel>
-            <FormControl
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="stevejobs@example.com"
               required
             />
-          </FormGroup>
+          </Form.Group>
           <FormGroup className="mb-3">
             <FormLabel>Password</FormLabel>
             <FormControl
@@ -98,15 +98,15 @@ const LoginPage = ({ history }) => {
           /> */}
 
           <Row>
-            <Col className="text-center">
+            <Col className="text-center py-3">
               <span className="text-lead">Don't have an account? </span>
-              <Link to="/users/signup">Sign Up</Link>
+              <Link to={"/register"}>Sign Up</Link>
             </Col>
           </Row>
         </Form>
       </FormContainer>
     </main>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

@@ -1,12 +1,32 @@
-import React from "react";
-import { Carousel, Image } from "react-bootstrap";
-import HomeCarasoul from "../shared/HomeCarasoul";
-import image1 from "../../data/images/devidayal_steep_dinner_set.jpeg";
-// import image2 from "../../data/Futura_Non_stick_set.jpg";
-// import image3 from "../../data/non-stick_set.jpeg";
+import React, { useEffect, useState } from 'react'
+import { Carousel, Col, Container, Image, Row } from 'react-bootstrap'
+import HomeCarasoul from '../shared/HomeCarasoul'
+//import products from '../../products.js'
+import ProductItem from '../products/ProductItem'
+import ProductList from '../products/ProductList'
+import { useDispatch, useSelector } from 'react-redux'
+import Footer from './Footer'
+import { showAllProducts } from '../../action/userAction'
+import Loader from '../shared/Loader'
 
 const HomePage = () => {
-  return <main></main>;
-};
+  const dispatch = useDispatch()
+  const { productList, loading, error } = useSelector(
+    (state) => state.showAllProducts
+  )
+  // console.log(productList)
+  useEffect(() => {
+    dispatch(showAllProducts())
+  }, [showAllProducts])
+  return (
+    <Container>
+      <main>
+        <h1 className='my-3'>Latest products</h1>
+        {loading && <Loader />}
+        {productList && <ProductList products={productList} />}
+      </main>
+    </Container>
+  )
+}
 
-export default HomePage;
+export default HomePage
