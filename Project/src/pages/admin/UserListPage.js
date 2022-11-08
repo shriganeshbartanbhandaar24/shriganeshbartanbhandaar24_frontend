@@ -1,69 +1,63 @@
 import React, { useEffect } from "react"
-import { Button, Col, Row, Table } from "react-bootstrap"
+import { Button, Table } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { LinkContainer } from "react-router-bootstrap"
-//import { listProducts } from "../../action/productAction"
+import { listUsers, deleteUser } from "../../action/userAction"
 import Loader from "../../components/shared/Loader"
 import Message from "../../components/shared/Message"
 
-const ProductListPage = ({ history, match }) => {
+const UserListPage = ({ history }) => {
   const dispatch = useDispatch()
 
-  const { loading, error, products } = useSelector(
-    (state) => state.productsList
-  )
   const { userInfo } = useSelector((state) => state.userInfo)
+  const { loading, error, users } = useSelector((state) => state.userList)
 
   const { success: successDelete } = useSelector((state) => state.userselete)
   //no-unused-vars
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      // dispatch(listProducts())
+      dispatch(listUsers())
     } else {
       history.push("/login")
     }
-  }, [dispatch, userInfo])
+  }, [dispatch, successDelete])
 
   const deleteHandler = (id) => {
-    //dispatch(deleteProducts(id))
+    dispatch(deleteUser(id))
   }
-  const createProductHandler = () => {}
 
   return (
     <>
-      <Row className="align-items-center">
-        <Col>
-          <h1>Products</h1>
-        </Col>
-        <Col className="text-right">
-          <Button className="my-3" onClick={createProductHandler}>
-            <i className="fas fa-plus"></i> Create
-          </Button>
-        </Col>
-      </Row>
-
+      <h1>Users</h1>
       <Table striped bordered hover responsive className="table-sm">
         <thead>
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Brand</th>
+            <th>Email</th>
+            <th>Admin</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {products ? (
-            products.map((product) => (
-              <tr key={product._id}>
-                <td>{product._id}</td>
-                <td>{product.name}</td>
-                <td>${product.price}</td>
-                <td>{product.category}</td>
-                <td>{product.brand}</td>
+          {users ? (
+            users.map((user) => (
+              <tr key={user._id}>
+                <td>{user._id}</td>
+                <td>{user.name}</td>
                 <td>
-                  <LinkContainer to={`admin/product/${product._id}/edit`}>
+                  <a href={`mailto:${user.email}`}>{user.email}</a>
+                </td>
+                <td>
+                  {user.isAdmin ? (
+                    <i className="fas fa-check" style={{ color: "green" }}></i>
+                  ) : (
+                    <i className="fas fa-times" style={{ color: "red" }}></i>
+                  )}
+                </td>
+                <td>
+                  <LinkContainer to={`/user/${user._id}/edit`}>
                     <div>
                       <Button variant="light" className="btn-sm">
                         <i className="fas fa-edit"></i>
@@ -72,7 +66,7 @@ const ProductListPage = ({ history, match }) => {
                         variant="danger"
                         className="btn-sm"
                         onClick={() => {
-                          deleteHandler(product._id)
+                          deleteHandler(user._id)
                         }}
                       >
                         <i className="fas fa-trash"></i>
@@ -86,7 +80,7 @@ const ProductListPage = ({ history, match }) => {
             <tr>
               <td colSpan="5">
                 <h3>
-                  <strong>There are No Products Registered Yet.</strong>
+                  <strong>There are No Users Registered Yet.</strong>
                 </h3>
               </td>
             </tr>
@@ -97,7 +91,7 @@ const ProductListPage = ({ history, match }) => {
   )
 }
 
-export default ProductListPage
+export default UserListPage
 
 //CSB
 //Interview
